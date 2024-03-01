@@ -1,0 +1,179 @@
+<div class="container">
+  <div class="m-auto w-75">
+    <h2 class="my-4 text-center">Log in</h2>
+    <form
+      class=""
+      [formGroup]="loginForm"
+      (ngSubmit)="loginSubmitMethod()"
+      action=""
+    >
+      <div class="my-3">
+        <label for="email">E-mail</label>
+        <input
+          class="form-control"
+          formControlName="email"
+          type="email"
+          id="email"
+        />
+      </div>
+
+      <div class="my-3">
+        <label for="password">Password</label>
+        <input
+          class="form-control"
+          formControlName="password"
+          type="password"
+          id="password"
+        />
+      </div>
+
+      <p *ngIf="errorMsg" class="text-danger">Incorrect email or password</p>
+
+      <div class="d-flex align-content-center justify-content-between">
+        <!-- Button trigger modal -->
+        <button
+          type="button"
+          class="btn"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+        >
+          Forgotten password?
+        </button>
+
+        <!-- Modal -->
+        <div
+          class="modal fade"
+          id="exampleModal"
+          tabindex="-1"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">
+                  Forgot password
+                </h1>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <!-- email form -->
+                <div *ngIf="forgotFormFlag">
+                  <p>Please enter your email to receive the code</p>
+                  <form
+                    (ngSubmit)="sendCodeToEmail()"
+                    [formGroup]="emailVerificationForm"
+                    action=""
+                  >
+                    <label for="email-verification">E-mail</label>
+                    <input
+                      type="email"
+                      class="form-control"
+                      id="email-verification"
+                      formControlName="email"
+                    />
+                    <p
+                      class="text-danger"
+                      *ngIf="emailVerificationForm.get('email')?.errors?.['required'] && emailVerificationForm.get('email')?.touched"
+                    >
+                      email is required
+                    </p>
+                    <p
+                      class="text-danger"
+                      *ngIf="emailVerificationStatus != 'success'"
+                    >
+                      {{ emailVerificationMsg }}
+                    </p>
+                    <button
+                      type="submit"
+                      [disabled]="emailVerificationForm.invalid"
+                      class="btn bg-main text-white my-2"
+                    >
+                      Send code
+                    </button>
+                  </form>
+                </div>
+                <!-- code verification form -->
+                <div *ngIf="verifyCodeFormFlag">
+                  <p>Please enter the code sent to your email</p>
+                  <form
+                    (ngSubmit)="verifyCode()"
+                    [formGroup]="verifyCodeForm"
+                    action=""
+                  >
+                    <label for="resetCode">Verification code</label>
+                    <!-- type:"number" blew it :| it hs to be text for some reason. i thought it stringifies it regardless??   -->
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="resetCode"
+                      id="resetCode"
+                    />
+                    <p
+                      class="text-danger"
+                      *ngIf="verifyCodeForm.get('resetCode')?.errors?.['required'] && verifyCodeForm.get('resetCode')?.touched"
+                    >
+                      please enter the code
+                    </p>
+
+                    <p
+                      class="text-danger"
+                      *ngIf="codeVerificationStatus != 'success'"
+                    >
+                      {{ codeVerificationMsg }}
+                    </p>
+
+                    <button type="submit" class="btn bg-main text-white my-2">
+                      Verify
+                    </button>
+                  </form>
+                </div>
+                <!-- new password form -->
+                <div *ngIf="newPassFormFlag">
+                  <p>Create new password</p>
+                  <form
+                    (ngSubmit)="resetPassword()"
+                    [formGroup]="newPasswordForm"
+                    action=""
+                  >
+                    <label for="email">E-mail</label>
+                    <input
+                      type="email"
+                      class="form-control"
+                      formControlName="email"
+                      id="email"
+                    />
+                  
+                    <label for="newPassword">New password</label>
+                    <input
+                      type="email"
+                      class="form-control"
+                      formControlName="newPassword"
+                      id="newPassword"
+                    />
+
+                    <button type="submit" class="btn bg-main text-white my-2">
+                      Confirm
+                    </button>
+                  </form>
+                </div>
+                <div>
+                  <p class="text-main" *ngIf="passwordChangedFlag">Password changed successfully.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="btn bg-main d-block ms-auto text-white">
+          <div *ngIf="!isLoading">Log in</div>
+          <i *ngIf="isLoading" class="fa fa-spinner fa-spin"></i>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
