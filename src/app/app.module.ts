@@ -15,8 +15,10 @@ import { ProductsComponent } from './products/products.component';
 import { NotfoundComponent } from './notfound/notfound.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-
-
+import { CutTextPipe } from './cut-text.pipe';
+// import { RouterModule } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CarouselModule } from 'ngx-owl-carousel-o';
 
 @NgModule({
   declarations: [
@@ -31,15 +33,18 @@ import { HttpClientModule } from '@angular/common/http';
     CartComponent,
     ProductsComponent,
     NotfoundComponent,
-    
+    CutTextPipe,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    // RouterModule, // why did this give an error
+    BrowserAnimationsModule,
+    CarouselModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

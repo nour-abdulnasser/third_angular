@@ -3,11 +3,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Encode+Sans+Expanded:wght@300&display=swap');
 
 :root {
-    --main-color: #0aad0a;
+    --main-color: #4FA74F;
     --light-color: #f0f3f2;
     --shadow: rgba(145, 158, 171, .2) 0px 2px 4px -1px, rgba(145, 158, 171, .14) 0px 4px 5px 0px, rgba(145, 158, 171, .12) 0px 1px 10px 0px;
     --font-family: 'Encode Sans Expanded', sans-serif;
     --rating-color: #ffc908;
+}
+
+.owl-theme .owl-nav [class*=owl-]{
+    background: var(--main-color) ;
 }
 
 body {
@@ -28,9 +32,20 @@ a:hover {
     text-decoration: none;
 }
 
+.product{
+    /* border: 1px solid var(--main-color); */
+    border-color: none;
+    border-radius: 5px;
+    padding: 4px;
+    /* box-shadow: var(--shadow); */
+    transition: all 0.5s;
+}
+
 .product:hover {
-    box-shadow: var(--shadow);
-    border: solid 1px var(--main-color);
+    /* box-shadow: var(--shadow); */
+    box-shadow: 1px 1px 10px 2px var(--main-color);
+    /* transform: scale(1.1); */
+    /* border: solid 1px var(--main-color); */
 }
 
 .product .btn {
