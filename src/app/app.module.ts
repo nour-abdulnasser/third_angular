@@ -19,6 +19,9 @@ import { CutTextPipe } from './cut-text.pipe';
 // import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CarouselModule } from 'ngx-owl-carousel-o';
+import { ScrollToTopComponent } from './scroll-to-top/scroll-to-top.component';
+import { DetailsComponent } from './details/details.component';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -34,6 +37,8 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
     ProductsComponent,
     NotfoundComponent,
     CutTextPipe,
+    ScrollToTopComponent,
+    DetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,6 +48,7 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
     // RouterModule, // why did this give an error
     BrowserAnimationsModule,
     CarouselModule,
+    ToastrModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent],

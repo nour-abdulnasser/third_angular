@@ -1,1 +1,76 @@
-<p>cart works!</p>
+<section
+  class="mx-auto w-75 rounded shadow bg-main-light p-3 mb-3"
+  *ngIf="cartDetails; else msg"
+>
+  <div>
+    <h1 class="h2">Shopping cart</h1>
+    <p class="text-main">
+      Total price: {{ cartDetails.totalCartPrice | currency : "EGP " }}
+    </p>
+    <div
+      class="row my-3 border-bottom pb-2"
+      *ngFor="let cartItem of cartDetails.products"
+    >
+      <div class="col-md-1">
+        <img
+          [src]="cartItem.product.imageCover"
+          class="w-100"
+          [alt]="cartItem.product.title"
+        />
+      </div>
+      <div class="col-md-11 d-flex justify-content-between align-items-center">
+        <div>
+          <h3 class="h6">{{ cartItem.product.title }}</h3>
+          <p class="text-main small mb-0">Price: {{ cartItem.price | currency: 'EGP '}}</p>
+          <button
+            #btnRemoveItem
+            class="btn m-0 p-0 text-main"
+            (click)="removeItem(cartItem.product._id, btnRemoveItem)"
+          >
+            <i class="fas fa-trash-can"></i> <span>Remove item</span>
+          </button>
+        </div>
+        <div>
+          <button
+            #btnAdd
+            (click)="
+              changeCount(
+                cartItem.count + 1,
+                cartItem.product._id,
+                btnAdd,
+                btnSub
+              )
+            "
+            class="btn btn-sm border-success p-1"
+          >
+            <span class="m-1">+</span>
+          </button>
+          <span class="m-2">{{ cartItem.count }}</span>
+          <button
+            class="btn btn-sm border-success p-1"
+            #btnSub
+            (click)="
+              changeCount(
+                cartItem.count - 1,
+                cartItem.product._id,
+                btnAdd,
+                btnSub
+              )
+            "
+          >
+            <span class="m-1">-</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="text-center">
+      <button class="btn btn-danger " (click)="clear()">Clear cart</button>
+    </div>
+  </div>
+</section>
+
+<ng-template #msg>
+  <div class="d-flex align-items-center justify-content-center">
+    <h2 class="text-center">Your cart is empty...</h2>
+  </div>
+</ng-template>

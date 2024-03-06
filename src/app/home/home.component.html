@@ -1,5 +1,5 @@
-<section class="my-3 py-3">
-  <div class="container">
+<section class="p-3">
+  <div class="container-fluid">
     <div class="row g-0">
       <div class="col-md-9">
         <owl-carousel-o [options]="mainSliderOptions">
@@ -29,8 +29,18 @@
         </owl-carousel-o>
       </div>
       <div class="col-md-3">
-        <img height="200" src="./assets/images/mainimg1.jpg" alt="" />
-        <img height="200" src="./assets/images/mainimg2.jpg" alt="" />
+        <img
+          height="200"
+          class="w-100"
+          src="./assets/images/mainimg1.jpg"
+          alt=""
+        />
+        <img
+          height="200"
+          class="w-100"
+          src="./assets/images/mainimg2.jpg"
+          alt=""
+        />
       </div>
     </div>
   </div>
@@ -66,22 +76,37 @@
         *ngFor="let product of allProducts | slice : 0 : 18"
         class="col-sm-6 col-md-4 col-lg-3 col-xl-2"
       >
-        <div class="product cursor-pointer -3 h-100 p-2">
-          <img
-            class="w-100"
-            [title]="product.title"
-            [src]="product.imageCover"
-            [alt]="product.title"
-          />
-          <h4 class="text-main h6">{{ product.category.name }}</h4>
-          <h3 class="h6">{{ product.title | cutText : 3 }}</h3>
-          <div class="d-flex justify-content-between align-items-center small">
-            <span>{{ product.price | currency : "E£" }}</span>
-            <p>
-              <i class="fa fa-star rating-color"></i>
-              <span class="text-muted">{{ product.ratingsAverage }}</span>
-            </p>
-          </div>
+        <div class="product h-100 p-2 pb-0 overflow-hidden">
+          <header role="button" [routerLink]="['/productdetails', product._id]">
+            <img
+              class="w-100"
+              [title]="product.title"
+              [src]="product.imageCover"
+              [alt]="product.title"
+            />
+            <h4 class="text-main h6">{{ product.category.name }}</h4>
+            <h3 class="h6 small">{{ product.title | cutText : 3 }}</h3>
+            <div
+              class="d-flex justify-content-between align-items-center small mb-0 mt-auto"
+            >
+              <div class="d-flex align-items-center">
+                <span>{{ product.price | currency : "E£" }}</span>
+              </div>
+              <div
+                class="d-flex flex-column justify-content-center p-0 mt-auto pb-1"
+              >
+                <p class="d-flex align-items-center mb-0">
+                  <i class="fa fa-star rating-color"></i>
+                  <span class="text-muted">{{ product.ratingsAverage }}</span>
+                </p>
+              </div>
+            </div>
+          </header>
+          <footer class="text-center my-2">
+            <button class="btn bg-main text-light" (click)="addProduct(product._id, btnAddToCart)" #btnAddToCart>
+              <i class="fa-plus"></i> <span>Add to cart</span>
+            </button>
+          </footer>
         </div>
       </div>
     </div>

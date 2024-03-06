@@ -17,4 +17,8 @@ export class ProductsService {
   getCategoriesAPI(): Observable<any> {
     return this._HttpClient.get(`${this.baseUrl}/api/v1/categories`);
   }
+
+  getSpecificProductDetails(id:string|null){
+    return this._HttpClient.get(`${this.baseUrl}/api/v1/products/${id}`);
+  }
 }

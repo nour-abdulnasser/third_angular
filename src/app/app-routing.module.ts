@@ -10,6 +10,7 @@ import { LoginComponent } from './login/login.component';
 import { ProductsComponent } from './products/products.component';
 import { NotfoundComponent } from './notfound/notfound.component';
 import { authGuard } from './auth.guard';
+import { DetailsComponent } from './details/details.component';
 
 const routes: Routes = [
   // { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'products', canActivate: [authGuard], component: ProductsComponent },
+  { path: 'productdetails/:id', canActivate: [authGuard], component: DetailsComponent },
 
   { path: '**', component: NotfoundComponent },
 ];
