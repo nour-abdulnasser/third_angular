@@ -4,6 +4,7 @@ import { Category, Product } from '../product';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { CartService } from '../cart.service';
 import { ToastrService } from 'ngx-toastr';
+import { WishlistService } from '../wishlist.service';
 
 @Component({
   selector: 'app-home',
@@ -13,14 +14,22 @@ import { ToastrService } from 'ngx-toastr';
 export class HomeComponent implements OnInit {
   allProducts: Product[] = [];
   allCategories: Category[] = [];
+  searchTerm: string = '';
+  wishlistArr: string[] = [];
 
   constructor(
     private _ProductsService: ProductsService,
     private _CartService: CartService,
+    private _WishlistService: WishlistService,
     private _ToastrService: ToastrService,
     private _Renderer2: Renderer2
   ) {}
   ngOnInit(): void {
+    this._WishlistService.getUserWishlist().subscribe({
+      next: (res: any) => {
+        this.wishlistArr = res.data.map((item:any)=>item._id);
+      },
+    });
     this._ProductsService.getProductsAPI().subscribe({
       next: (response: any) => {
         console.log('allProducts', response);
@@ -86,6 +95,24 @@ export class HomeComponent implements OnInit {
     autoplaySpeed: 1000,
   };
 
+  addProductToWishlist(id: string | undefined, element: HTMLElement): void {
+    this._Renderer2.setAttribute(element, 'disabled', 'true');
+    this._WishlistService.addToWishlistRequest(id).subscribe({
+      next: (res: any) => {
+        console.log('wishlist home ', res);
+        this._ToastrService.success(res.message);
+        this._Renderer2.removeAttribute(element, 'disabled');
+        this.wishlistArr = res.data;
+        this._WishlistService.wishlistNumberOfProducts.next(res.data.length);
+      },
+      error: (errorRes) => {
+        console.log('wishlist', errorRes);
+        this._ToastrService.error(errorRes.message);
+        this._Renderer2.removeAttribute(element, 'disabled');
+      },
+    });
+  }
+
   addProduct(id: string | undefined, element: HTMLButtonElement): void {
     this._Renderer2.setAttribute(element, 'disabled', 'true');
     this._CartService.addToCart(id).subscribe({
@@ -93,11 +120,26 @@ export class HomeComponent implements OnInit {
         console.log('cart', res);
         this._ToastrService.success(res.message);
         this._Renderer2.removeAttribute(element, 'disabled');
+        this._CartService.cartNumberOfProducts.next(res.numOfCartItems);
       },
       error: (errorRes) => {
         console.log('cart', errorRes);
         this._ToastrService.error(errorRes.message);
         this._Renderer2.removeAttribute(element, 'disabled');
+      },
+    });
+  }
+
+  removeFromWishlist(id: string | undefined, element?: HTMLElement): void {
+
+    this._WishlistService.removeWishlistItem(id).subscribe({
+      next: (res: any) => {
+        console.log(res);
+        this._ToastrService.success(res.message);
+        this.wishlistArr = res.data;
+        this._WishlistService.wishlistNumberOfProducts.next(res.data.length);
+        
+
       },
     });
   }

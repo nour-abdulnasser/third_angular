@@ -91,3 +91,9 @@ a:hover {
 .bg-main-light {
   background-color: var(--light-color) !important;
 }
+
+
+
+.myHeart{
+  font-size: 25px;
+}

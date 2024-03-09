@@ -1,0 +1,24 @@
+<section>
+    <div class="container">
+        <div class="row g-4 my-1">
+            <div class="col-md-3">
+                <div class="text-center">
+
+                    <img class="w-100 m-auto" [src]="categoryDetails.image" [alt]="categoryDetails.name">
+                    <h3 class="text-main mt-3">{{categoryDetails.name}}</h3>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="text-center">
+                    <h3 class=" text-main">Subcategories</h3>
+                    <div class="row g-3 my-3">
+                        <div *ngFor="let subcat of subcats" class="rounded border border-success m-2 py-3 col-md-3">
+                            <p class="h4 d-inline">{{subcat.name}}</p>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

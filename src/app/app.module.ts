@@ -13,8 +13,8 @@ import { CategoryComponent } from './category/category.component';
 import { CartComponent } from './cart/cart.component';
 import { ProductsComponent } from './products/products.component';
 import { NotfoundComponent } from './notfound/notfound.component';
-import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { CutTextPipe } from './cut-text.pipe';
 // import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -22,7 +22,15 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
 import { ScrollToTopComponent } from './scroll-to-top/scroll-to-top.component';
 import { DetailsComponent } from './details/details.component';
 import { ToastrModule } from 'ngx-toastr';
-
+import { PaymentComponent } from './payment/payment.component';
+import { AllOrdersComponent } from './all-orders/all-orders.component';
+import {NgxPaginationModule} from 'ngx-pagination';
+import { MyhttpInterceptor } from './myhttp.interceptor';
+import { NgxSpinnerModule } from "ngx-spinner";
+import { LoadingInterceptor } from './loading.interceptor';
+import { SearchPipe } from './search.pipe';
+import { CategorydetailsComponent } from './categorydetails/categorydetails.component';
+import { WishlistComponent } from './wishlist/wishlist.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,6 +47,11 @@ import { ToastrModule } from 'ngx-toastr';
     CutTextPipe,
     ScrollToTopComponent,
     DetailsComponent,
+    PaymentComponent,
+    AllOrdersComponent,
+    SearchPipe,
+    CategorydetailsComponent,
+    WishlistComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,8 +62,14 @@ import { ToastrModule } from 'ngx-toastr';
     BrowserAnimationsModule,
     CarouselModule,
     ToastrModule.forRoot(),
+    NgxPaginationModule,
+    NgxSpinnerModule,
+    FormsModule
   ],
-  providers: [],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass:MyhttpInterceptor,multi:true},
+    {provide: HTTP_INTERCEPTORS, useClass:LoadingInterceptor,multi:true},
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -1,21 +1,13 @@
-<section class="py-4" *ngIf="allProducts.length > 0">
+<section class="py-4" *ngIf="wishlistArr.length > 0; else msg">
   <div class="container">
-    <h2>All products</h2>
+    <h2 class="my-2 text-main">Your wishlist</h2>
+
     <div class="row g-4">
-      <div
-        *ngFor="
-          let product of allProducts
-            | paginate
-              : {
-                  id: 'productsPaginate',
-                  itemsPerPage: pageSize,
-                  currentPage: currentPage,
-                  totalItems: total
-                }
-        "
-        class="col-sm-6 col-md-4 col-lg-3 col-xl-2"
-      >
-        <div class="product h-100 p-2 pb-0 overflow-hidden">
+      <div *ngFor="let product of wishlistData" class="col-md-4 col-lg-3">
+        <div
+          class="product h-100 p-2 pb-0 overflow-hidden"
+          
+        >
           <header role="button" [routerLink]="['/productdetails', product._id]">
             <img
               class="w-100"
@@ -41,7 +33,9 @@
               </div>
             </div>
           </header>
-          <footer class="d-flex justify-content-between align-items-center my-2">
+          <footer
+            class="d-flex justify-content-between align-items-center my-2"
+          >
             <button
               class="btn bg-main text-light"
               (click)="addProduct(product._id, btnAddToCart)"
@@ -49,31 +43,31 @@
             >
               <i class="fa-plus"></i> <span>Add to cart</span>
             </button>
-            
-            <div >
-              <i class="fa-solid fa-heart myHeart" role="button"></i>
+            <div>
+              <i
+                *ngIf="!wishlistArr.includes($any(product._id))"
+                class="fa-regular fa-heart myHeart"
+                role="button"
+                (click)="addProductToWishlist(product._id, btnHeartAdd)"
+                #btnHeartAdd
+              ></i>
+              <i
+                *ngIf="wishlistArr.includes($any(product._id))"
+                class="fa-solid fa-heart myHeart"
+                role="button"
+                (click)="removeFromWishlist(product._id, btnHeartRemove)"
+                #btnHeartRemove
+              ></i>
             </div>
           </footer>
         </div>
       </div>
     </div>
   </div>
-
-  <div class="d-flex justify-content-center mt-5">
-    <pagination-controls
-      id="productsPaginate"
-      (pageChange)="pageChanged($event)"
-      (pageBoundsCorrection)="pageChanged($event)"
-      [maxSize]="9"
-      [directionLinks]="true"
-      [autoHide]="true"
-      [responsive]="true"
-      previousLabel="Previous"
-      nextLabel="Next"
-      screenReaderPaginationLabel="Pagination"
-      screenReaderPageLabel="page"
-      screenReaderCurrentLabel="You're on page"
-    >
-    </pagination-controls>
-  </div>
 </section>
+
+<ng-template #msg>
+  <div class="d-flex align-items-center justify-content-center">
+    <h2 class="text-center">You wish for nothing &lt;/3</h2>
+  </div>
+</ng-template>

@@ -1,5 +1,7 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { CartService } from '../cart.service';
+// import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-cart',
@@ -8,6 +10,7 @@ import { CartService } from '../cart.service';
 })
 export class CartComponent implements OnInit {
   cartDetails: any = null;
+
   constructor(
     private _CartService: CartService,
     private _Renderer2: Renderer2
@@ -29,6 +32,8 @@ export class CartComponent implements OnInit {
         console.log(res);
         this.cartDetails = res.data;
         this._Renderer2.removeAttribute(element, 'disabled');
+        this._CartService.cartNumberOfProducts.next(res.numOfCartItems)
+
       },
       error: () => {
         this._Renderer2.removeAttribute(element, 'disabled');
@@ -63,8 +68,9 @@ export class CartComponent implements OnInit {
   clear() {
     this._CartService.clearCart().subscribe({
       next: (res) => {
-        if (res.message === 'success'){
-          this.cartDetails = null
+        if (res.message === 'success') {
+          this.cartDetails = null;
+          this._CartService.cartNumberOfProducts.next(0)
         }
       },
       error: () => {},

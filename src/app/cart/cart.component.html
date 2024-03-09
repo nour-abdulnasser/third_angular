@@ -3,10 +3,19 @@
   *ngIf="cartDetails; else msg"
 >
   <div>
-    <h1 class="h2">Shopping cart</h1>
-    <p class="text-main">
-      Total price: {{ cartDetails.totalCartPrice | currency : "EGP " }}
-    </p>
+    <div class="d-flex justify-content-between">
+      <div>
+        <h1 class="h2">Shopping cart</h1>
+        <p class="text-main">
+          Total price: {{ cartDetails.totalCartPrice | currency : "EGP " }}
+        </p>
+      </div>
+      <div>
+        <button [routerLink]="['/payment', cartDetails._id]" class="btn btn-success">
+          Checkout
+        </button>
+      </div>
+    </div>
     <div
       class="row my-3 border-bottom pb-2"
       *ngFor="let cartItem of cartDetails.products"
@@ -21,7 +30,9 @@
       <div class="col-md-11 d-flex justify-content-between align-items-center">
         <div>
           <h3 class="h6">{{ cartItem.product.title }}</h3>
-          <p class="text-main small mb-0">Price: {{ cartItem.price | currency: 'EGP '}}</p>
+          <p class="text-main small mb-0">
+            Price: {{ cartItem.price | currency : "EGP " }}
+          </p>
           <button
             #btnRemoveItem
             class="btn m-0 p-0 text-main"
@@ -64,7 +75,7 @@
       </div>
     </div>
     <div class="text-center">
-      <button class="btn btn-danger " (click)="clear()">Clear cart</button>
+      <button class="btn btn-danger" (click)="clear()">Clear cart</button>
     </div>
   </div>
 </section>

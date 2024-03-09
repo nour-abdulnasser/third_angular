@@ -11,6 +11,10 @@ import { ProductsComponent } from './products/products.component';
 import { NotfoundComponent } from './notfound/notfound.component';
 import { authGuard } from './auth.guard';
 import { DetailsComponent } from './details/details.component';
+import { PaymentComponent } from './payment/payment.component';
+import { AllOrdersComponent } from './all-orders/all-orders.component';
+import { CategorydetailsComponent } from './categorydetails/categorydetails.component';
+import { WishlistComponent } from './wishlist/wishlist.component';
 
 const routes: Routes = [
   // { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -18,11 +22,16 @@ const routes: Routes = [
   { path: 'home', canActivate: [authGuard], component: HomeComponent },
   { path: 'brands', canActivate: [authGuard], component: BrandsComponent },
   { path: 'cart', canActivate: [authGuard], component: CartComponent },
+  { path: 'wishlist', canActivate: [authGuard], component: WishlistComponent },
   { path: 'category', canActivate: [authGuard], component: CategoryComponent },
+  { path: 'categorydetails/:id', canActivate: [authGuard], component: CategorydetailsComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'products', canActivate: [authGuard], component: ProductsComponent },
   { path: 'productdetails/:id', canActivate: [authGuard], component: DetailsComponent },
+  { path: 'payment/:cartId', canActivate: [authGuard], component: PaymentComponent },
+  { path: 'allorders', canActivate: [authGuard], component: AllOrdersComponent },
+  // { path: 'payment', canActivate: [authGuard], component: PaymentComponent },
 
   { path: '**', component: NotfoundComponent },
 ];
