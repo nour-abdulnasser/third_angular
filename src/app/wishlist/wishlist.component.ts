@@ -59,6 +59,8 @@ wishlistArr: string[] = [];
         this._Renderer2.removeAttribute(element, 'disabled');
         // this._WishlistService.wishlistNumberOfProducts.next(res.numOfCartItems);
         this.wishlistArr = res.data;
+        this._WishlistService.wishlistNumberOfProducts.next(res.data.length);
+
 
       },
       error: (errorRes) => {
@@ -76,6 +78,8 @@ wishlistArr: string[] = [];
         console.log(res);
         this._ToastrService.success(res.message)
         this.wishlistArr = res.data;
+        this._WishlistService.wishlistNumberOfProducts.next(res.data.length);
+
         this._WishlistService.getUserWishlist().subscribe({
           next:(res:any)=>{
             this.wishlistData = res.data;
